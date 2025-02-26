@@ -14,7 +14,7 @@ class FetchNews extends Command
     public function handle()
     {
         $apiKey = env('NEWS_API_KEY');
-        $response = Http::get("https://newsapi.org/v2/top-headlines?country=us&apiKey={$apiKey}");
+        $response = Http::get("https://newsapi.org/v2/top-headlines?category=entertainment&apiKey={$apiKey}");
 
         if ($response->failed()) {
             $this->error('Failed to fetch news.');
@@ -38,7 +38,7 @@ class FetchNews extends Command
                     'description' => $article['description'] ?? null,
                     'urlToImage' => $article['urlToImage'] ?? null,
                     'content' => $article['content'] ?? null,
-                    'category' => "general",
+                    'category' => "entertainment",
                     'published_at' => date('Y-m-d H:i:s', strtotime($article['publishedAt']))
                 ]
             );

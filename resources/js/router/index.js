@@ -1,5 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/homeView.vue'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+import ParticularNews from '../views/particularNews.vue'
 
 const routes = [
   {
@@ -7,11 +8,17 @@ const routes = [
     name: 'home',
     component: HomeView
   },
+  {
+    path: '/news/:id',
+    name: 'particularNews',
+    component: ParticularNews,
+    props: true
+  },
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes
-})
+});
 
 export default router

@@ -1,7 +1,9 @@
 <template>
     <nav class="bg-white">
         <div class="flex items-center justify-between px-6 md:px-20 py-5 border-b-4 border-dashed border-gray-200">
-            <p class="font-bold text-5xl text-green-600 italic">News<span class="text-slate-800">Wave</span></p>
+            <router-link :to="{ name: 'home'}">
+                <p class="font-bold text-5xl text-green-600 italic">News<span class="text-slate-800">Wave</span></p>
+            </router-link>
 
             <div class="flex items-center gap-7">
                 <p class="font-bold underline cursor-pointer"><i class="fa-regular fa-envelope pr-2 text-lg"></i>Subscribe</p>
@@ -11,9 +13,11 @@
 
         <div class="flex items-center justify-between px-6 md:px-20 py-4 border-b-4 border-dashed border-gray-200">
             <ul class="hidden md:flex space-x-6">
-                <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition text-green-600">
-                    Home
-                </li>
+                <router-link :to="{ name: 'home'}">
+                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition text-green-600">
+                        Home
+                    </li>
+                </router-link>
                 <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
                     General
                 </li>

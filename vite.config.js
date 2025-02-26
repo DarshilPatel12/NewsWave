@@ -12,9 +12,13 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        historyApiFallback: true
+    },
     resolve: {
         alias: {
             vue: "vue/dist/vue.esm-bundler.js",
         },
     },
 });
+  
