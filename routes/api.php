@@ -22,6 +22,8 @@ Route::get('top-headline-news', [NewsController::class, 'getTopHeadlineNews']);
 Route::get('particular-news/{id}', [NewsController::class, 'getParticularNews']);
 Route::get('related-news/{id}', [NewsController::class, 'getRelatedNews']);
 
+Route::get('category-news/{category}', [NewsController::class, 'getCategoryNews']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

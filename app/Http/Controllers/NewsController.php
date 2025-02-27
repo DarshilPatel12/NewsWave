@@ -28,7 +28,7 @@ class NewsController extends Controller
     }
 
     public function getLatestNews(){
-        $news = News::latest()->inRandomOrder()->paginate(10);
+        $news = News::latest()->paginate(10);
 
         return response()->json([
             'status' => true,
@@ -62,4 +62,13 @@ class NewsController extends Controller
         ]);
     }
     
+    public function getCategoryNews($category){
+        $news = News::where("category", $category)->paginate(10);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'News fetched successfully',
+            'data' => $news
+        ]);
+    }
 }

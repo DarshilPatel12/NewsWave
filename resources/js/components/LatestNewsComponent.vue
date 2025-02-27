@@ -1,12 +1,12 @@
 <template>
     <router-link :to="{ name: 'particularNews', params: { id: news.id } }">
-        <div class="w-full flex flex-col items-start space-y-3 text-left">
+        <div class="w-full flex flex-col items-start space-y-3 text-left mb-10">
             <img :src=news.urlToImage :alt=news.title class="w-full h-50 rounded-lg object-cover" defer>
 
             <p class="font-bold text-lg">{{ news.title.length > 60 ? news.title.slice(0, 60) + '...' : news.title }}</p>
             <p class="text-gray-600">{{ news.description.length > 80 ? news.description.slice(0, 80) + '...' : news.description }}</p>
 
-            <div class="pt-7 flex items-center space-x-2 text-gray-500">
+            <div class="pt-7 flex items-center space-x-2 text-gray-500" v-if="timeShow">
                 <i class="fa-regular fa-clock"></i>
                 <span>{{ timeAgoComputed }}</span>
             </div>
@@ -21,6 +21,10 @@ const props = defineProps({
     news: {
         type: Object,
         required: true,
+    },
+    timeShow: {
+        type: Boolean,
+        required: false
     }
 });
 

@@ -3,17 +3,19 @@
     <div class="">
         <h3 class="px-20 py-7 font-bold text-left text-5xl italic border-b-4 border-dashed border-gray-200">Breaking News</h3>
         <div class="mt-7" v-if="!breakingNewsLoading && breakingNews.length > 0">
-            <div class="relative w-full h-[500px] bg-cover bg-center flex items-end px-20" :style="{ backgroundImage: `url(${breakingNews[0]?.urlToImage || 'fallback-image.jpg'})` }">
-                <div class="absolute inset-0 bg-black/30"></div>
+            <router-link :to="{ name: 'particularNews', params: { id: breakingNews[0]?.id } }">
+                <div class="relative w-full h-[500px] bg-cover bg-center flex items-end px-20" :style="{ backgroundImage: `url(${breakingNews[0]?.urlToImage || 'fallback-image.jpg'})` }">
+                    <div class="absolute inset-0 bg-black/30"></div>
 
-                <div class="relative z-10 text-white">
-                    <p class="text-left font-bold text-4xl text-white p-4 pb-10 rounded-md">
-                        {{ breakingNews[0].title }}
-                    </p>
+                    <div class="relative z-10 text-white">
+                        <p class="text-left font-bold text-4xl text-white p-4 pb-10 rounded-md">
+                            {{ breakingNews[0].title }}
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </router-link>
 
-            <div class="px-20 py-5 flex justify-between gap-6">
+            <div class="px-20 py-5 grid grid-cols-3 gap-6">
                 <BreakingNewsComponent 
                     v-for="(newsItem, index) in breakingNews.slice(1, 4)" 
                     :key="index" 
@@ -26,7 +28,7 @@
                 <div class="absolute inset-0 bg-gray-300"></div>
             </div>
 
-            <div class="px-20 py-5 flex justify-between gap-6">
+            <div class="px-20 py-5 grid grid-cols-3 gap-6">
                 <template v-for="i in 3" :key="i">
                     <div class="flex items-center gap-6 animate-pulse">
                         <div class="w-30 h-30 bg-gray-300 rounded"></div>
@@ -39,15 +41,15 @@
             </div>
         </div>
 
-        <h3 class="mt-7 px-20 py-7 font-bold text-left text-5xl italic border-b-4 border-dashed border-gray-200">Latest News <i class="fa-solid fa-angle-right pl-2 text-green-600"></i></h3>
-        <div class="px-20 py-5 flex justify-between gap-6" v-if="!latestNewsLoading && latestNews.length > 0">
+        <router-link :to="{ name: 'latestNews'}"><h3 class="mt-7 px-20 py-7 font-bold text-left text-5xl italic border-b-4 border-dashed border-gray-200">Latest News <i class="fa-solid fa-angle-right pl-2 text-green-600"></i></h3></router-link>
+        <div class="px-20 py-5 grid grid-cols-3 gap-6" v-if="!latestNewsLoading && latestNews.length > 0">
             <LatestNewsComponent
                 v-for="(newsItem, index) in latestNews.slice(0, 3)" 
                 :key="index" 
                 :news="newsItem"
             />
         </div>
-        <div class="px-20 py-5 flex justify-between gap-6" v-else>
+        <div class="px-20 py-5 grid grid-cols-3 gap-6" v-else>
             <template v-for="i in 3" :key="i">
                 <div class="w-full flex flex-col items-start space-y-3 text-left animate-pulse">
                     <div class="w-full h-50 bg-gray-300 rounded-lg"></div>
@@ -63,14 +65,14 @@
             </template>
         </div>
 
-        <div class="px-20 py-5 flex justify-between gap-6" v-if="!latestNewsLoading && latestNews.length > 0">
+        <div class="px-20 py-5 grid grid-cols-2 gap-6" v-if="!latestNewsLoading && latestNews.length > 0">
             <CategoryNewsComponent 
                 v-for="(newsItem, index) in latestNews.slice(3, 5)" 
                 :key="index" 
                 :news="newsItem"
             />
         </div>
-        <div class="px-20 py-5 flex justify-between gap-6" v-else>
+        <div class="px-20 py-5 grid grid-cols-2 gap-6" v-else>
             <template v-for="i in 2" :key="i">
                 <div class="relative w-full h-[500px] bg-cover bg-center flex flex-col justify-end px-5 pb-6 animate-pulse">
                     <div class="absolute inset-0 bg-gray-300"></div>
@@ -83,15 +85,15 @@
             </template>
         </div>
 
-        <h3 class="mt-7 px-20 py-7 font-bold text-left text-5xl italic border-b-4 border-dashed border-gray-200">Top Headline <i class="fa-solid fa-angle-right pl-2 text-green-600"></i></h3>
-        <div class="px-20 py-5 flex justify-between gap-6" v-if="!topHeadlineNewsLoading && topHeadlineNews.length > 0">
+        <router-link :to="{ name: 'topHeadlineNews'}"><h3 class="mt-7 px-20 py-7 font-bold text-left text-5xl italic border-b-4 border-dashed border-gray-200">Top Headline <i class="fa-solid fa-angle-right pl-2 text-green-600"></i></h3></router-link>
+        <div class="px-20 py-5 grid grid-cols-4 gap-6" v-if="!topHeadlineNewsLoading && topHeadlineNews.length > 0">
             <TopHeadlineComponent 
                 v-for="(newsItem, index) in topHeadlineNews.slice(0, 4)" 
                 :key="index" 
                 :news="newsItem"
             />
         </div>
-        <div class="px-20 py-5 flex justify-between gap-6" v-else>
+        <div class="px-20 py-5 grid grid-cols-4 gap-6" v-else>
             <template v-for="i in 4" :key="i">
                 <div class="w-full flex flex-col items-start space-y-3 text-left animate-pulse">
                     <div class="w-full h-50 rounded-lg bg-gray-300"></div>

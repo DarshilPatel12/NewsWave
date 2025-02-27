@@ -18,21 +18,31 @@
                         Home
                     </li>
                 </router-link>
-                <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
-                    General
-                </li>
-                <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
-                    Sports
-                </li>
-                <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
-                    Business
-                </li>
-                <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
-                    Entertainment
-                </li>
-                <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
-                    Health
-                </li>
+                <router-link :to="{ name: 'categoryNews', params: { category: 'general' } }">
+                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
+                        General
+                    </li>
+                </router-link>
+                <router-link :to="{ name: 'categoryNews', params: { category: 'sports' } }">
+                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
+                        Sports
+                    </li>
+                </router-link>
+                <router-link :to="{ name: 'categoryNews', params: { category: 'business' } }">
+                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
+                        Business
+                    </li>
+                </router-link>
+                <router-link :to="{ name: 'categoryNews', params: { category: 'entertainment' } }">
+                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
+                        Entertainment
+                    </li>
+                </router-link>
+                <router-link :to="{ name: 'categoryNews', params: { category: 'health' } }">
+                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
+                        Health
+                    </li>
+                </router-link>
             </ul>
 
             <!-- Search Box with Icon Inside -->
