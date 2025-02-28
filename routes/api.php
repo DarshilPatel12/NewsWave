@@ -23,6 +23,7 @@ Route::get('particular-news/{id}', [NewsController::class, 'getParticularNews'])
 Route::get('related-news/{id}', [NewsController::class, 'getRelatedNews']);
 
 Route::get('category-news/{category}', [NewsController::class, 'getCategoryNews']);
+Route::get('search-news/{search}', [NewsController::class, 'getSearchNews']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

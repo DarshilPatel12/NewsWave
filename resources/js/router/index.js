@@ -4,6 +4,7 @@ import ParticularNews from '../views/particularNews.vue'
 import CategoryNews from '../views/categoryNews.vue'
 import LatestNews from '../views/latestNews.vue'
 import TopHeadlineNews from '../views/topHeadlineNews.vue'
+import SearchNews from '../views/searchNews.vue'
 
 const routes = [
   {
@@ -33,11 +34,24 @@ const routes = [
     name: 'topHeadlineNews',
     component: TopHeadlineNews
   },
+  {
+    path: '/search/:search',
+    name: 'searchNews',
+    component: SearchNews,
+    props: true
+  },
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({ top: 0, behavior: 'smooth' });
+        }, 400);
+    });
+  }
 });
 
 export default router

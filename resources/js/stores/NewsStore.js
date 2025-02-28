@@ -27,5 +27,9 @@ export const useNewsStore = defineStore('newsStore', {
             const response = await axios.get(`/api/category-news/${category}?page=${page}`);
             return response;
         },
+        async getSearchNews(search, page){
+            const response = await axios.get(`/api/search-news/${search}?page=${page}`);
+            return response;
+        },
     }
 })

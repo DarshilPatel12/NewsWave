@@ -1,17 +1,17 @@
 <template>
     <HeaderComponent />
     <div class="mt-5" id="news">
-        <h3 class="px-20 py-4 font-bold text-left text-5xl italic capitalize">{{ props.category }}</h3>
+        <h3 class="px-20 py-4 font-bold text-left text-5xl">Search Result for <span class="italic">{{ props.search }}</span></h3>
 
         <div class="px-20 py-5 grid grid-cols-3 gap-6">
             <LatestNewsComponent
-                v-for="(newsItem, index) in categoryNews" 
+                v-for="(newsItem, index) in searchNews" 
                 :key="index" 
                 :news="newsItem"
                 :timeShow="false"
             />
 
-            <div v-if="categoryNewsLoading" class="w-full flex flex-col items-start space-y-3 text-left animate-pulse col-span-3 sm:col-span-1">
+            <div v-if="searchNewsLoading" class="w-full flex flex-col items-start space-y-3 text-left animate-pulse col-span-3 sm:col-span-1">
                 <div class="w-full h-50 bg-gray-300 rounded-lg"></div>
                 <div class="w-3/4 h-6 bg-gray-300 rounded"></div>
                 <div class="w-full h-4 bg-gray-300 rounded"></div>
@@ -29,27 +29,27 @@
 import HeaderComponent from '../components/HeaderComponent.vue';
 import FooterComponent from '../components/FooterComponent.vue';
 import LatestNewsComponent from '../components/LatestNewsComponent.vue';
-import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useNewsStore } from '@/stores/NewsStore';
 
-const props = defineProps(['category']);
+const props = defineProps(['search']);
 const newsStore = useNewsStore();
 
-const categoryNews = ref([]);
-const categoryNewsLoading = ref(true);
+const searchNews = ref([]);
+const searchNewsLoading = ref(true);
 
 const currentPage = ref(1);
 const isLoading = ref(false);
 const hasMoreData = ref(true);
 
-const getCategoryNews = async (page) => {
+const getSearchNews = async (page) => {
     try {
-        categoryNewsLoading.value = true;
+        searchNewsLoading.value = true;
 
-        const categoryNewsResponse = await newsStore.getCategoryNews(props.category, page);
+        const searchNewsResponse = await newsStore.getSearchNews(props.search, page);
 
-        if (categoryNewsResponse.data && categoryNewsResponse.data.data.data.length > 0) {
-            categoryNews.value = [...categoryNews.value, ...categoryNewsResponse.data.data.data];
+        if (searchNewsResponse.data && searchNewsResponse.data.data.data.length > 0) {
+            searchNews.value = [...searchNews.value, ...searchNewsResponse.data.data.data];
         }
         else{
             hasMoreData.value = false;
@@ -59,7 +59,7 @@ const getCategoryNews = async (page) => {
         console.log("Error:", error);
     }
     finally {
-        categoryNewsLoading.value = false;
+        searchNewsLoading.value = false;
     }
 }
 
@@ -71,7 +71,7 @@ const handleScroll = () => {
     if (scrollTop + clientHeight >= scrollHeight - 100 && !isLoading.value && hasMoreData.value) {
         isLoading.value = true;
         currentPage.value += 1;
-        getCategoryNews(currentPage.value).then(() => {
+        getSearchNews(currentPage.value).then(() => {
             isLoading.value = false;
         });
     }
@@ -79,15 +79,10 @@ const handleScroll = () => {
 
 onMounted(() => {
     window.addEventListener("scroll", handleScroll);
-    getCategoryNews(currentPage.value);
+    getSearchNews(currentPage.value);
 });
 
 onUnmounted(() => {
     window.removeEventListener("scroll", handleScroll);
-});
-
-watch(() => props.category, () => {
-    categoryNews.value = [];
-    getCategoryNews(1, true);
 });
 </script>

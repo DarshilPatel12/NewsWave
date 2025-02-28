@@ -14,32 +14,32 @@
         <div class="flex items-center justify-between px-6 md:px-20 py-4 border-b-4 border-dashed border-gray-200">
             <ul class="hidden md:flex space-x-6">
                 <router-link :to="{ name: 'home'}">
-                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition text-green-600">
+                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition" :class="{ 'text-green-600': route.path === '/' }">
                         Home
                     </li>
                 </router-link>
                 <router-link :to="{ name: 'categoryNews', params: { category: 'general' } }">
-                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
+                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition" :class="{ 'text-green-600': route.path === '/category/general' }">
                         General
                     </li>
                 </router-link>
                 <router-link :to="{ name: 'categoryNews', params: { category: 'sports' } }">
-                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
+                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition" :class="{ 'text-green-600': route.path === '/category/sports' }">
                         Sports
                     </li>
                 </router-link>
                 <router-link :to="{ name: 'categoryNews', params: { category: 'business' } }">
-                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
+                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition" :class="{ 'text-green-600': route.path === '/category/business' }">
                         Business
                     </li>
                 </router-link>
                 <router-link :to="{ name: 'categoryNews', params: { category: 'entertainment' } }">
-                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
+                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition" :class="{ 'text-green-600': route.path === '/category/entertainment' }">
                         Entertainment
                     </li>
                 </router-link>
                 <router-link :to="{ name: 'categoryNews', params: { category: 'health' } }">
-                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition">
+                    <li class="list-none cursor-pointer font-semibold hover:text-green-600 transition" :class="{ 'text-green-600': route.path === '/category/health' }">
                         Health
                     </li>
                 </router-link>
@@ -47,13 +47,28 @@
 
             <!-- Search Box with Icon Inside -->
             <div class="relative w-[400px]">
-                <input type="text" placeholder="Search" class="w-full bg-gray-200 p-3 pl-4 pr-10 border border-white rounded-full focus:outline-none" />
-                <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 cursor-pointer"></i>
+                <input type="text" placeholder="Search" v-model="search" class="w-full bg-gray-200 p-3 pl-4 pr-10 border border-white rounded-full focus:outline-none" />
+                <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 cursor-pointer" @click="searchData"></i>
             </div>
         </div>
     </nav>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 
+const router = useRouter();
+const route = useRoute();
+const search = ref(route.params.search || '');
+
+const searchData = () => {
+    if (!search.value) return;
+    router.push({ name: 'searchNews', params: { search: search.value } });
+};
+
+// Update search when route changes
+watch(() => route.params.search, (newSearch) => {
+    search.value = newSearch || '';
+}, { immediate: true });
 </script>

@@ -71,4 +71,14 @@ class NewsController extends Controller
             'data' => $news
         ]);
     }
+
+    public function getSearchNews($search){
+        $news = News::where('title', 'like', '%' . $search . '%')->paginate(10);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'News fetched successfully',
+            'data' => $news
+        ]);
+    }
 }
