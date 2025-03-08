@@ -121,8 +121,17 @@
                 <div class="w-1/2 bg-gray-100 p-6 rounded-lg">
                     <label class="text-gray-700 font-semibold block mb-2">Your Email</label>
                     <div class="flex items-center bg-white border border-gray-300 rounded-lg overflow-hidden">
-                        <input type="email" placeholder="Email address" class="w-full px-4 py-3 text-gray-700 focus:outline-none">
-                        <button class="bg-green-600 text-white px-6 py-3 font-bold hover:bg-green-700 transition">Submit</button>
+                        <input type="email" v-model="subscribeEmail" placeholder="Email address" class="w-full px-4 py-3 text-gray-700 focus:outline-none">
+                        <button class="bg-green-600 text-white px-6 py-3 font-bold hover:bg-green-700 transition" @click="handleSubscribe">
+                            <span v-if="subscribeLoading" :disabled="subscribeLoading">Submit</span>
+                            <span v-else>Submit</span>
+                        </button>
+                    </div>
+                    <div v-if="subscribeError" class="text-sm text-red-600 bg-red-100 p-2 rounded-md mb-4 dark:bg-red-200 dark:text-red-800">
+                        {{ subscribeError }}
+                    </div>
+                    <div v-if="subscribeSuccess" class="text-sm text-green-600 bg-green-100 p-2 rounded-md mb-4 dark:bg-green-200 dark:text-green-800">
+                        {{ subscribeSuccess }}
                     </div>
                     <p class="text-gray-500 text-sm mt-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas minus iusto consectetur ullam pariatur atque.</p>
                 </div>
@@ -141,8 +150,10 @@ import CategoryNewsComponent from '../components/CategoryNewsComponent.vue';
 import TopHeadlineComponent from '../components/TopHeadlineComponent.vue';
 import { ref, onMounted } from 'vue';
 import { useNewsStore } from '@/stores/NewsStore';
+import { useAuthStore } from '@/stores/AuthStore';
 
 const newsStore = useNewsStore();
+const authStore = useAuthStore();
 
 const breakingNews = ref(null);
 const breakingNewsLoading = ref(true);
@@ -152,6 +163,11 @@ const latestNewsLoading = ref(true);
 
 const topHeadlineNews = ref(null);
 const topHeadlineNewsLoading = ref(true);
+
+const subscribeEmail = ref(null);
+const subscribeLoading = ref(true);
+const subscribeError = ref(null);
+const subscribeSuccess = ref(null);
 
 const getBreakingNews = async () => {
     try {
@@ -198,6 +214,47 @@ const getTopHeadlineNews = async () => {
     }
     finally {
         topHeadlineNewsLoading.value = false;
+    }
+}
+
+const handleSubscribe = async () => {
+    subscribeError.value = "";
+    subscribeSuccess.value = "";
+
+    if(subscribeEmail.value == ''){
+        subscribeError.value = "Email filed required!";
+        return;
+    }
+
+    try{
+        subscribeLoading.value = true;
+
+        const subscribeResponse = await authStore.subscribe({ email: subscribeEmail.value });
+        
+        if (subscribeResponse.status) {
+            subscribeSuccess.value = subscribeResponse.data.message;
+            subscribeEmail.value = "";
+        }
+    }
+    catch (error) {
+        if (error.response) {
+            if (error.response.status === 401) {
+                subscribeError.value = "Unauthorized access.";
+            } else if (error.response.status === 422) {
+                subscribeError.value = error.response.data.error?.email
+                    ? error.response.data.error.email[0]
+                    : "Invalid email format.";
+            } else {
+                subscribeError.value = "Something went wrong! Please try again.";
+            }
+        } else {
+            subscribeError.value = "Server is unreachable. Please try again later.";
+        }
+
+        console.error("Subscription Error:", error);
+    }
+    finally{
+        subscribeLoading.value = false
     }
 }
 

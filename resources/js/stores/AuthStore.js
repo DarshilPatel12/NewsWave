@@ -70,6 +70,16 @@ export const useAuthStore = defineStore('authStore', {
                 this.user = JSON.parse(storedUser);
                 this.isAuthenticated = true;
             }
-        }
+        },
+
+        async subscribe(email) {
+            try {
+                const response = await axios.post("api/subscribe", email);
+                return response;
+            } catch (error) {
+                console.error("RegistrSubscriptionation failed:", error);
+                throw error;
+            }
+        },
     }
 });

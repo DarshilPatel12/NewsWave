@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -62,6 +63,23 @@ class AuthController extends Controller
         try {
             $request->user()->tokens()->delete();
             return response()->json(['message' => 'Logged out successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Something went wrong'], 500);
+        }
+    }
+
+    public function subscribe(Request $request)
+    {
+        try {
+            $request->validate([
+                'email' => 'required|email|unique:subscriptions,email',
+            ]);
+
+            Subscription::create(['email' => $request->email]);
+
+            return response()->json(['message' => 'Subscription successful!'], 201);
+        } catch (ValidationException $e) {
+            return response()->json(['error' => $e->errors()], 422);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Something went wrong'], 500);
         }
