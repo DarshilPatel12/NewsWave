@@ -23,7 +23,7 @@
 import HeaderComponent from '../components/HeaderComponent.vue';
 import FooterComponent from '../components/FooterComponent.vue';
 import ParticularNewsComponent from '../components/ParticularNewsComponent.vue';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useNewsStore } from '@/stores/NewsStore';
 
 const props = defineProps(['id']);
@@ -49,6 +49,11 @@ const getParticularNews = async () => {
 }
 
 onMounted(async () => {
+    getParticularNews();
+});
+
+watch(() => props.id, () => {
+    particularNews.value = [];
     getParticularNews();
 });
 </script>

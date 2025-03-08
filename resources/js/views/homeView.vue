@@ -133,7 +133,7 @@
                     <div v-if="subscribeSuccess" class="text-sm text-green-600 bg-green-100 p-2 rounded-md mb-4 dark:bg-green-200 dark:text-green-800">
                         {{ subscribeSuccess }}
                     </div>
-                    <p class="text-gray-500 text-sm mt-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas minus iusto consectetur ullam pariatur atque.</p>
+                    <p class="text-gray-500 text-sm mt-3">Subscribe to our newsletter and stay updated with the latest news, exclusive offers, and insightful articles directly in your inbox.</p>
                 </div>
             </div>
         </div>

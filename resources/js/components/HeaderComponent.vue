@@ -23,7 +23,7 @@
                 <!-- Show profile icon if user is logged in -->
                 <div v-else class="relative group">
                     <img 
-                        :src="'../../images/defaultuser.png'" 
+                        :src="'../images/defaultuser.png'" 
                         alt="Profile"
                         class="w-10 h-10 rounded-full cursor-pointer border border-gray-300"
                     />
