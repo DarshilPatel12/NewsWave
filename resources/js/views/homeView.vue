@@ -259,8 +259,8 @@ const handleSubscribe = async () => {
 }
 
 onMounted(async () => {
-    getBreakingNews();
-    getLatestNews();
-    getTopHeadlineNews();
+    await getBreakingNews();
+    await getLatestNews();
+    await getTopHeadlineNews();
 });
 </script>
