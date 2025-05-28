@@ -4,10 +4,10 @@
             <div class="absolute inset-0 bg-black/30"></div>
 
             <div class="relative z-10 text-white">
-                <p class="text-left font-bold text-4xl text-white p-4 rounded-md max-w-2xl">
+                <div class="text-left font-bold text-4xl text-white p-4 rounded-md max-w-2xl">
                     <p class="text-sm pb-5">{{ news.category }} | {{ timeAgoComputed }}</p>
                     {{ news.title.length > 60 ? news.title.slice(0, 60) + '...' : news.title }}
-                </p>
+                </div>
             </div>
         </div>
     </router-link>
