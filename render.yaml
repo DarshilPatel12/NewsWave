@@ -1,7 +1,7 @@
 services:
   - type: web
     name: newswave
-    env: php
+    runtime: php
     plan: free
     buildCommand: |
       curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
